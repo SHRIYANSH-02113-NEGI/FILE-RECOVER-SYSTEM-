@@ -1,7 +1,8 @@
-🔰 Project Title:
-File Recovery System Using PYTSK3
+🔰 Project Title  :  File Recovery System Using PYTSK3
+
 
 👋 Introduction:
+
 Hi, I’m Shriyansh Negi, and this is my PBL (Project-Based Learning) submission under the Operating System subject.
 Our project focuses on solving a real-life problem: accidental deletion of files.
 
