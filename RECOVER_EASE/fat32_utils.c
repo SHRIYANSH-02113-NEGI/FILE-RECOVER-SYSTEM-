@@ -5,39 +5,6 @@
 #include <wchar.h>
 #include "fat32_utils.h"
 
-// Define structures for FAT32 Boot Sector
-#pragma pack(push, 1)
-typedef struct {
-    uint8_t  jumpBoot[3];
-    char     OEMName[8];
-    uint16_t bytesPerSector;
-    uint8_t  sectorsPerCluster;
-    uint16_t reservedSectorCount;
-    uint8_t  numFATs;
-    uint16_t rootEntryCount;
-    uint16_t totalSectors16;
-    uint8_t  mediaType;
-    uint16_t FATSize16;
-    uint16_t sectorsPerTrack;
-    uint16_t numHeads;
-    uint32_t hiddenSectors;
-    uint32_t totalSectors32;
-    uint32_t FATSize32;
-    uint16_t extFlags;
-    uint16_t FSVersion;
-    uint32_t rootCluster;
-    uint16_t FSInfo;
-    uint16_t backupBootSector;
-    uint8_t  reserved[12];
-    uint8_t  driveNumber;
-    uint8_t  reserved1;
-    uint8_t  bootSignature;
-    uint32_t volumeID;
-    char     volumeLabel[11];
-    char     fileSystemType[8];
-} FAT32BootSector;
-#pragma pack(pop)
-
 // Function implementations
 void readBootSector(FILE *disk, FAT32BootSector *bootSector) {
     fseek(disk, 0, SEEK_SET);
