@@ -1,19 +1,18 @@
----
 ## 🛠️ STEPS TO USE
+---
 
 ### 📦 Step 1: Create a Virtual Disk (VHD)
 
-1. Open **Disk Management** (type `diskmgmt.msc` in Run)
+1. Open **Disk Management** (`diskmgmt.msc`)
 2. Click on **Action → Create VHD**
 3. Set:
-   - Location: `C:\mydisk.vhd`
-   - Size: 100 MB (for testing)
-   - Format: `VHD`
-   - Type: `Fixed Size` (recommended)
+   - `Location`: `C:\mydisk.vhd`
+   - `Size`: 100 MB (for testing)
+   - `Format`: VHD
+   - `Type`: Fixed Size (recommended)
 4. Initialize the disk as **MBR**
 5. Right-click unallocated space → **New Simple Volume**
-   - Format it as **FAT32** or **NTFS** (your choice)
-
+   - Format as **FAT32** or **NTFS** (your choice)
 ---
 
 ### 📸 Step 2: Use the VHD as a Disk Image
