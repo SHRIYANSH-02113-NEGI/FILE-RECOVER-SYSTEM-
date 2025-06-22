@@ -1,4 +1,4 @@
-# 🔰Project Title: File Recovery System Using PYTSK3 and C
+# 🔰 File Recovery System Using PYTSK3 and C
 
 ## 👋 Introduction
 
