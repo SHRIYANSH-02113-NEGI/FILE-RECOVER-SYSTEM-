@@ -28,3 +28,8 @@
 ```bash
 gcc main.c ntfs_utils.c -o ntfs_recover
 ./ntfs_recover mydisk.vhd NTFS
+
+gcc mainfat.c fat32_utils.c -o fat32_recover
+./fat32_recover mydisk.vhd FAT32
+
+
