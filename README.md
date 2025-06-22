@@ -13,9 +13,10 @@ This tool scans the deleted files from disk images and tries to recover data usi
 
 🧠 Technologies Used:
 1. Python 3
-2. pytsk3 (Python bindings for TSK – The Sleuth Kit)
-3. OS module, datetime, argparse (for CLI)
-4. Disk image files (.img, .dd, .vhd, etc.)
+2. C for Performance Optimization
+3. pytsk3 (Python bindings for TSK – The Sleuth Kit)
+4. OS module, datetime, argparse (for CLI)
+5. Disk image files (.img, .dd, .vhd, etc.)
 
 📌 Assumptions:
 To ensure the system works effectively and delivers accurate results, the following assumptions are made:
