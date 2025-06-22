@@ -1,70 +1,93 @@
-🔰 Project Title  :  File Recovery System Using PYTSK3
+# 🔰 Project Title: File Recovery System Using PYTSK3 and C
 
-👋 Introduction:
-🔍 Before We Begin: Understanding File Systems
-A file system is a method and data structure that an operating system uses to control how data is stored and retrieved on storage media (like hard drives, SSDs, USB drives).
+## 👋 Introduction
+
+Accidental file loss is a common issue — whether it's a student deleting an assignment, a developer losing source code, or a user accidentally formatting a storage device. Our project addresses this real-world problem by creating a **File Recovery System** capable of recovering deleted files from disk images.
+
+This tool utilizes **pytsk3 (Python bindings for The Sleuth Kit)** for NTFS-based recovery and **C-based implementation** for both NTFS and FAT32 systems, enabling low-level access to file system structures and deleted file entries.
+
+---
+
+## 🔍 Understanding File Systems
+
+A **file system** is the structure and method used by an operating system to store and manage data on drives such as SSDs, HDDs, and USBs.
 
 Two of the most widely used file systems in modern computing are:
-_____________________________________________________________________________________________________________________________________________________________________________________________
 
-📁 FAT32 – File Allocation Table 32
-FAT32 stands for File Allocation Table (32-bit). It is an older file system introduced by Microsoft, primarily for portable storage like USB drives, SD cards, and small hard drives.
+---
 
-🧠 How it Works:
-1. Data is stored in clusters, and a FAT table keeps track of where each file starts and continues.
-2. If a file spans multiple clusters, the FAT table has to link them one after another.
-3. It uses simple linear allocation, making it lightweight and easy to implement.
-_____________________________________________________________________________________________________________________________________________________________________________________________
+### 📁 FAT32 – File Allocation Table 32
 
-⚠️ Limitations of FAT32:
-1. File Size Limit: Maximum file size is 4 GB. Any file larger than this can't be stored.
-3. Partition Size Limit: FAT32 supports partitions only up to 2 TB.
-4. No File Permissions: It does not support modern access control or file permissions.
-5. No Journaling: It lacks journaling, making it more prone to corruption.
-6. Less Efficient: For large drives and many files, FAT32 becomes inefficient and fragmented.
-_____________________________________________________________________________________________________________________________________________________________________________________________
+**FAT32** is an older file system introduced by Microsoft, commonly used in USB drives, memory cards, and small partitions.
 
-💿 NTFS – New Technology File System
-NTFS (developed by Microsoft) is a modern, secure, and feature-rich file system used by all current versions of Windows and many external storage devices.
+#### 🧠 How It Works:
+1. Data is stored in clusters; a **FAT Table** tracks where each file starts and continues.
+2. If a file spans multiple clusters, the FAT links them sequentially.
+3. Uses simple linear allocation, making it lightweight and easy to implement.
 
-🧠 How it Works:
-1. Instead of a FAT table, NTFS uses a Master File Table (MFT).
-2. Each file and directory has a corresponding MFT entry with metadata and data location.
-3. It supports advanced features like journaling, encryption, and compression.
-_____________________________________________________________________________________________________________________________________________________________________________________________
+#### ⚠️ Limitations:
+- ❌ **Max File Size**: 4 GB
+- ❌ **Max Partition Size**: 2 TB
+- ❌ **No File Permissions**
+- ❌ **No Journaling** (prone to corruption)
+- ❌ **Fragmentation** issues in large disks
 
-🔧 Why This Matters for Our Project
-Our project aims to recover deleted files from both FAT32 and NTFS file systems. To do this:
+---
 
-1. We must understand how data is stored and deleted in each format.
-2. Deleted files in FAT32 simply have the first character in the directory entry replaced (often with 0xE5), and clusters marked as free.
-3. NTFS marks file entries in the MFT as deleted but retains much metadata, making recovery possible with proper parsing.
+### 💿 NTFS – New Technology File System
 
-Our project focuses on solving a real-life problem: accidental deletion of files.
+**NTFS** is a modern, secure file system developed by Microsoft and used by all current Windows systems.
 
-Accidental file loss is something many people face in their day-to-day life—whether it's a student deleting an assignment, a developer losing code, or a regular user accidentally formatting a drive.
+#### 🧠 How It Works:
+1. Uses a **Master File Table (MFT)** to store metadata and file information.
+2. Each file/directory has an MFT entry with attributes like name, size, and location.
+3. Supports **journaling**, **encryption**, **compression**, and **file permissions**.
 
-To tackle this issue, we developed a File Recovery System using the pytsk3 library in Python.
-This tool scans the deleted files from disk images and tries to recover data using low-level access to disk partitions and file systems.
-_____________________________________________________________________________________________________________________________________________________________________________________________
+#### ✅ Advantages over FAT32:
+| Feature               | FAT32        | NTFS              |
+|----------------------|--------------|-------------------|
+| Max File Size        | 4 GB         | 16 TB+            |
+| File Permissions     | ❌ No        | ✅ Yes            |
+| Journaling Support   | ❌ No        | ✅ Yes            |
+| Encryption/Compression | ❌ No     | ✅ Yes            |
+| Crash Recovery       | Poor         | Excellent         |
 
-🧠 Technologies Used:
-1. Python 3
-2. C for Performance Optimization
-3. pytsk3 (Python bindings for TSK – The Sleuth Kit)
-4. OS module, datetime, argparse (for CLI)
-5. Disk image files (.img, .dd, .vhd, etc.)
-_____________________________________________________________________________________________________________________________________________________________________________________________
+---
 
-📌 Assumptions:
-To ensure the system works effectively and delivers accurate results, the following assumptions are made:
+## 🔧 Why This Matters
 
-1. Disk Image Availability :- The user provides a valid disk image file (e.g., .img, .dd, .vhd) from the storage medium where the deletion occurred.
+To effectively recover deleted files from **FAT32 and NTFS**, we must understand how they handle deletion:
 
-2. Deleted Files Not Overwritten :- The tool assumes that the deleted files have not been overwritten. Once a file's sectors are reused by the system, full recovery is not guaranteed.
+- In **FAT32**, deletion simply marks the first character of a directory entry as `0xE5`, and marks the clusters as free.
+- In **NTFS**, deletion marks the MFT entry as unused but often retains metadata and data clusters.
 
-3. Supported File System :- The file system in the disk image should be supported by The Sleuth Kit (TSK) (e.g., NTFS, FAT, ext2/3/4). The tool may not function correctly with unsupported or encrypted file systems.
+Thus, recovery is possible **as long as the deleted file data hasn’t been overwritten.**
 
-4. Read Permissions :- The Python script has permission to access the disk image file and its directories.
+---
 
-5. Python Environment is Set Up :- Python 3.x and required libraries like pytsk3 are properly installed on the machine running the recovery script.
+## 🧠 Technologies Used
+
+- 🐍 **Python 3.x**
+- 🔧 **C (for FAT32 and NTFS low-level access)**
+- 📚 **pytsk3** – Python bindings for The Sleuth Kit
+- 🧰 **argparse**, `os`, `datetime` – Python standard modules
+- 💾 Supports: `.img`, `.dd`, `.vhd` disk image formats
+
+---
+
+## 📌 Assumptions
+
+To ensure accurate recovery, the following assumptions are made:
+
+1. **Disk Image Availability**: User provides a valid disk image file (e.g., `.img`, `.dd`, `.vhd`).
+2. **Files Not Overwritten**: Deleted files must not have their sectors reused.
+3. **Supported File System**: Works on NTFS, FAT32, ext2/3/4 (as supported by TSK).
+4. **Permissions**: Script has permission to read the image file.
+5. **Python Environment Ready**: Python 3.x and `pytsk3` must be properly installed.
+
+---
+
+> ✅ This project demonstrates deep system-level understanding of file systems and their internal structures to **recover lost data intelligently and safely.**
+
+---
+
