@@ -23,7 +23,7 @@
 
 ### ⚙️ Step 3: Compile and Run
 
-#### 🔧 Compile for NTFS (C):
+#### 🔧 Compile for NTFS and FAT32 (C):
 
 ```bash
 gcc main.c ntfs_utils.c -o ntfs_recover
